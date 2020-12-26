@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, TextInput, VirtualizedList } from 'react-native
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import DisplaySummary from './DisplaySummary';
 import Pot from './Pot';
-import ConstantsPot from '../constants/Pots';
+import ConstantsPot from '../constants/ConstantPots';
 
 const IPot = {
     nome: '',
