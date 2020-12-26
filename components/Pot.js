@@ -8,9 +8,9 @@ const Pot = (props) => {
             <View style={style.potInfo} >
                 <Text
                     style={style.potInfoLabel}> {props.description} |
-                    <Text style={style.potInfoPercent}> %</Text>
+                    <Text style={style.potInfoPercent}> {props.percentual}%</Text>
                 </Text>
-                <Text style={style.potInfoValue}>R$ </Text>
+                <Text style={style.potInfoValue}>R$ {props.value}</Text>
             </View>
             <TouchableOpacity>
                 <Image source={require('../assets/images/delete.png')} />

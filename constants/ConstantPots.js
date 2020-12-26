@@ -28,7 +28,7 @@ const ConstantPots = [
         description: 'Doação',    
         value: 0,
         percentual: 5    
-    },
+    }
 ]
 
 export default ConstantPots;

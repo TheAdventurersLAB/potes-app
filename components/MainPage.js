@@ -1,20 +1,32 @@
 import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
+import { useState } from 'react';
+import { View, Text, StyleSheet, SafeAreaView, ScrollView, FlatList } from 'react-native';
 import InputCalculator from './InputCalculator';
+import ConstantPots from '../constants/ConstantPots';
+import Pot from './Pot';
 
 const MainPage = () => {
+  // Calcule
+  const [pots, setPots] = useState([]);
+
+  function calculate(inputValue = 0) {
+    let array = ConstantPots.map((item) => {
+      item.value = (item.percentual * Number.parseFloat(+inputValue)) / 100;
+      return item;
+    });
+    setPots(array);
+  }
+
   return (
     <SafeAreaView>
-      <ScrollView  contentContainerStyle={style.scrollview} >
-        <View style={ style.header }>
-          <Text style={ style.appName }>Meus Potes</Text>
-          <Text style={ style.welcome }>Olá, <Text style={ style.user }>Jefferson</Text></Text>
+      <ScrollView contentContainerStyle={style.scrollview} >
+        <View style={style.header}>
+          <Text style={style.appName}>Meus Potes</Text>
+          <Text style={style.welcome}>Olá, <Text style={style.user}>Jefferson</Text></Text>
         </View>
-        <SafeAreaView>
-        <View style={ style.cardContent } >
-          <InputCalculator />
+        <View style={style.cardContent} >
+          <InputCalculator onHandleCalculate={calculate} pots={pots}/>
         </View>
-        </SafeAreaView>
       </ScrollView>
     </SafeAreaView>
   );
@@ -24,7 +36,7 @@ const style = StyleSheet.create({
   container: {
     backgroundColor: 'red',
   },
-  scrollview:{
+  scrollview: {
     display: 'flex',
     justifyContent: 'space-between',
     backgroundColor: '#F1F6F9',
@@ -44,10 +56,10 @@ const style = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold'
   },
-  welcome:{
+  welcome: {
     fontSize: 18
   },
-  user:{
+  user: {
     fontWeight: 'bold'
   },
   cardContent: {

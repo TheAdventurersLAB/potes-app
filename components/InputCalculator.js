@@ -1,30 +1,18 @@
 import React from 'react';
 import { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, VirtualizedList } from 'react-native';
+import { View, Text, StyleSheet, TextInput, FlatList } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import DisplaySummary from './DisplaySummary';
 import Pot from './Pot';
-import ConstantsPot from '../constants/ConstantPots';
 
-const IPot = {
-    nome: '',
-    value: 0,
-    percent: 0,
-};
-
-const InputCalculator = () => {
-    const [valueTotal, setValueTotal] = useState(0);
-    const [pots, setPots] = useState([]);
-
-    function calculate() {
-        let array = ConstantsPot.map((item) => {
-            item.value = (item.percentual * Number.parseFloat(+valueTotal)) / 100;
-            return item;
-        }).join('');
-        setPots(array);
-        console.log(pots);
-    }
-
+const InputCalculator = (props) => {
+    const [inputValue, setinputValue] = useState(0);
+    const renderItem = ({ item }) => (
+        <Pot
+            description={item.description}
+            value={item.value}
+            percentual={item.percentual} />
+    );
     return (
         <View style={style.container}>
             <Text style={style.labelInput}>Informe o valor:</Text>
@@ -32,15 +20,19 @@ const InputCalculator = () => {
                 <TextInput
                     style={style.input}
                     keyboardType="decimal-pad"
-                    onChangeText={value => setValueTotal(+value)}
-                    value={valueTotal}
+                    onChangeText={value => setinputValue(value)}
+                    value={inputValue}
                 />
-                <TouchableOpacity onPress={() => { calculate() }}>
+                <TouchableOpacity onPress={() => props.onHandleCalculate(inputValue)}>
                     <Text style={style.buttonCalculator}>Calcular</Text>
                 </TouchableOpacity>
             </View>
             <DisplaySummary />
-            
+            <FlatList
+                data={props.pots}
+                renderItem={renderItem}
+                keyExtractor={item => item.description}
+            />
         </View>
     );
 };
